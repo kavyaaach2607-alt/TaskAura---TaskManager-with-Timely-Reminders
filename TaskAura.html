@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TaskAura — Your Beautiful Task Manager</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="D:\PROJECT\HTML N CSS\taskaura1.css">
+</head>
+<body>
+<div class="orb-mid"></div>
+<div class="toast" id="toast"></div>
+<!-- REMINDER POPUP -->
+<div class="reminder-alert" id="reminderAlert">
+  <button class="close-r" onclick="closeReminder()">✕</button>
+  <h4>⏰ Reminder!</h4>
+  <p id="reminderText">Your task is due soon!</p>
+</div>
+<!-- ══ LANDING PAGE ══ -->
+<div id="landing" class="page active">
+  <nav>
+    <div class="logo"><span class="logo-dot"></span>TaskAura</div>
+    <div class="nav-links">
+      <button class="pill"  onclick="show('login')">Log In</button>
+      <button class="pill2" onclick="show('signup')">Sign Up</button>
+    </div>
+  </nav>
+  <div class="hero">
+    <div class="hero-tag">✨ Smart Task Manager with Reminders</div>
+    <h1>Organise Your World<br>with <span class="accent">TaskAura</span></h1>
+    <p class="hero-sub">Add tasks, set reminders, beat every deadline. Your most productive, beautiful self starts right here.</p>
+    <div class="hero-btns">
+      <button class="btn btn-white"   onclick="show('signup')">Get Started Free →</button>
+      <button class="btn btn-outline" onclick="show('login')">Sign In</button>
+    </div>
+    <div class="trust-bar">
+      <div class="trust-item"><span>✅</span> Free Forever</div>
+      <div class="trust-item"><span>🔔</span> Smart Reminders</div>
+      <div class="trust-item"><span>🎨</span> Beautiful Design</div>
+      <div class="trust-item"><span>⚡</span> Instant Setup</div>
+    </div>
+  </div>
+  <div class="cards-section">
+    <div class="cards-title">Everything you need to stay on track</div>
+    <div class="cards">
+      <div class="card"><span class="icon">⏰</span><h3>Smart Reminders</h3><p>Get notified 5 minutes before any deadline, automatically.</p></div>
+      <div class="card"><span class="icon">🗂️</span><h3>Categories</h3><p>Organise tasks by Work, Study, Personal and more.</p></div>
+      <div class="card"><span class="icon">📊</span><h3>Live Stats</h3><p>Real-time progress tracking so you can see your wins.</p></div>
+      <div class="card"><span class="icon">🎨</span><h3>Beautiful UI</h3><p>A workspace so gorgeous you'll actually want to use it.</p></div>
+    </div>
+  </div>
+</div>
+<!-- ══ LOGIN PAGE ══ -->
+<div id="login" class="page">
+  <div class="form-wrap">
+    <div class="glass-form">
+      <div class="form-logo"><span class="logo-dot"></span>TaskAura</div>
+      <h2>Welcome back </h2>
+      <p class="sub">Sign in to manage your beautiful tasks</p>
+      <label>Email Address</label>
+      <input type="email" id="li-email" placeholder="you@gmail.com">
+      <label>Password</label>
+      <input type="password" id="li-pass" placeholder="••••••••">
+      <button class="btn-main" onclick="doLogin()">Sign In →</button>
+      <div class="switch">No account yet? <button onclick="show('signup')">Sign up free</button></div>
+      <div class="switch"><button onclick="show('landing')">← Back to Home</button></div>
+    </div>
+  </div>
+</div>
+<!-- ══ SIGNUP PAGE ══ -->
+<div id="signup" class="page">
+  <div class="form-wrap">
+    <div class="glass-form">
+      <div class="form-logo"><span class="logo-dot"></span>TaskAura</div>
+      <h2>Join TaskAura </h2>
+      <p class="sub">Create your free account today</p>
+      <label>Full Name</label>
+      <input type="text" id="su-name" placeholder="Jane Smith">
+      <label>Email Address</label>
+      <input type="email" id="su-email" placeholder="you@gmail.com">
+      <label>Password</label>
+      <input type="password" id="su-pass" placeholder="Choose a strong password">
+      <button class="btn-main" onclick="doSignup()">Create Account →</button>
+      <div class="switch">Already have an account? <button onclick="show('login')">Log in</button></div>
+      <div class="switch"><button onclick="show('landing')">← Back to Home</button></div>
+    </div>
+  </div>
+</div>
+<!-- ══ DASHBOARD ══ -->
+<div id="dashboard" class="page">
+  <div class="dash-nav">
+    <div class="logo"><span class="logo-dot"></span>TaskAura</div>
+    <div class="dash-links">
+      <button id="nav-home"     class="alink" onclick="dashNav('home')">🏠 Home</button>
+      <button id="nav-about"               onclick="dashNav('about')">💡 About</button>
+      <button id="nav-profile"             onclick="dashNav('profile')">👤 Profile</button>
+      <button id="nav-settings"            onclick="dashNav('settings')">⚙️ Settings</button>
+      <button class="so-btn"               onclick="show('landing')">Sign Out</button>
+    </div>
+  </div>
+  <div class="dash-body">
+    <!-- Welcome Bar -->
+    <div class="welcome-bar">
+      <div>
+        <h2 id="greet">Welcome back! </h2>
+        <p>Here are your tasks — stay on track and make today count!</p>
+      </div>
+      <div>
+        <div class="clock"   id="clock">--:--</div>
+        <div class="datestr" id="datestr">Loading...</div>
+      </div>
+    </div>
+    <!-- HOME PANEL -->
+    <div id="home-panel" class="panel show">
+      <div class="stats-row">
+        <div class="stat-card"><div class="snum" id="stat-total">0</div><div class="slabel">Total Tasks</div></div>
+        <div class="stat-card"><div class="snum" id="stat-done">0</div><div class="slabel">Completed</div></div>
+        <div class="stat-card"><div class="snum" id="stat-pending">0</div><div class="slabel">Pending</div></div>
+      </div>
+      <div class="add-task-box">
+        <h3>Add New Task</h3>
+        <div class="task-form-grid">
+          <div class="full">
+            <div class="tf-label">Task Title</div>
+            <input class="tf-input" id="t-title" placeholder="e.g. Submit project report">
+          </div>
+          <div>
+            <div class="tf-label">📅 Due Date</div>
+            <input class="tf-input" type="date" id="t-date">
+          </div>
+          <div>
+            <div class="tf-label">⏰ Due Time</div>
+            <input class="tf-input" type="time" id="t-time">
+          </div>
+          <div class="full">
+            <div class="tf-label">🗂️ Category</div>
+            <select class="tf-input" id="t-cat">
+              <option value="General">📌 General</option>
+              <option value="Work">💼 Work</option>
+              <option value="Personal">🏠 Personal</option>
+              <option value="Study">📚 Study</option>
+              <option value="Health">💪 Health & Fitness</option>
+              <option value="Shopping">🛒 Shopping</option>
+              <option value="Finance">💰 Finance</option>
+              <option value="Social">👥 Social</option>
+              <option value="Travel">✈️ Travel</option>
+              <option value="Creative">🎨 Creative</option>
+            </select>
+          </div>
+          <div class="full">
+            <button class="add-btn" onclick="addTask()">Add Task ✓</button>
+          </div>
+        </div>
+      </div>
+      <div class="task-list-box">
+        <h3>📋 My Tasks</h3>
+        <div id="task-list"></div>
+      </div>
+    </div>
+    <!-- ABOUT PANEL -->
+    <div id="about-panel" class="panel">
+      <div class="about-box">
+        <h3>About TaskAura</h3>
+        <p>TaskAura is your all-in-one task manager with smart timely reminders. Designed to help you stay productive, organised, and stress-free every single day.</p>
+        <p>Whether you're a student juggling deadlines, a professional managing projects, or someone who just wants to keep life beautifully organised — TaskAura is built for you.</p>
+        <div class="feature-grid">
+          <div class="feat-item"><div class="fi">⏰</div><h4>Smart Reminders</h4><p>Get notified before your deadline, never miss a task again.</p></div>
+          <div class="feat-item"><div class="fi">📊</div><h4>Progress Stats</h4><p>See how many tasks you've crushed in real-time.</p></div>
+          <div class="feat-item"><div class="fi">🗂️</div><h4>Categories</h4><p>Organise tasks by Work, Personal, Study and more.</p></div>
+          <div class="feat-item"><div class="fi">🎨</div><h4>Beautiful UI</h4><p>A gorgeous workspace you'll actually enjoy using daily.</p></div>
+        </div>
+      </div>
+    </div>
+    <!-- PROFILE PANEL -->
+    <div id="profile-panel" class="panel">
+      <div class="profile-box">
+        <div class="profile-top">
+          <div class="avatar-big" id="av-letter">J</div>
+          <div class="prof-info">
+            <h3 id="pf-name">Jane Smith</h3>
+            <p id="pf-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a1d4d2c4d3e1c6ccc0c8cd8fc2cecc">[email&#160;protected]</a></p>
+            <div class="badge-row">
+              <span class="badge b1">TaskAura Member</span>
+              <span class="badge b2">Free Plan</span>
+              <span class="badge b3">⚡ Active</span>
+            </div>
+          </div>
+        </div>
+        <div class="prof-stats">
+          <div class="pstat"><div class="pnum" id="ps-total">0</div><div class="plab">Tasks Created</div></div>
+          <div class="pstat"><div class="pnum" id="ps-done">0</div><div class="plab">Completed</div></div>
+          <div class="pstat"><div class="pnum">🔥 1</div><div class="plab">Day Streak</div></div>
+        </div>
+        <div class="prof-details">
+          <h4>Account Details</h4>
+          <div class="det-row"><span class="key">Full Name</span><span class="val" id="pd-name">—</span></div>
+          <div class="det-row"><span class="key">Email</span><span class="val" id="pd-email">—</span></div>
+          <div class="det-row"><span class="key">Member Since</span><span class="val">March 2026</span></div>
+          <div class="det-row"><span class="key">Plan</span><span class="val">Free Plan</span></div>
+          <div class="det-row"><span class="key">Reminders</span><span class="val">✅ Enabled</span></div>
+          <div class="det-row"><span class="key">Timezone</span><span class="val">Asia/Kolkata (IST)</span></div>
+        </div>
+      </div>
+    </div>
+    <!-- SETTINGS PANEL -->
+    <div id="settings-panel" class="panel">
+      <div class="settings-box">
+        <h3>⚙️ Settings</h3>
+        <div class="setting-row">
+          <div class="setting-info"><h5>🔔 Task Reminders</h5><p>Get notified 5 minutes before a task is due</p></div>
+          <button class="toggle on" onclick="this.classList.toggle('on')"></button>
+        </div>
+        <div class="setting-row">
+          <div class="setting-info"><h5>🔁 Auto-clear Completed</h5><p>Remove completed tasks after 7 days</p></div>
+          <button class="toggle on" onclick="this.classList.toggle('on')"></button>
+        </div>
+        <div class="setting-row">
+          <div class="setting-info"><h5>🎵 Sound Effects</h5><p>Play a sound when marking tasks complete</p></div>
+          <button class="toggle on" onclick="this.classList.toggle('on')"></button>
+        </div>
+        <div style="margin-top:28px;">
+          <button class="add-btn" onclick="showToast('✅ Settings saved!')">Save Settings</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+// ── DATA ──
+var user = { name: '', email: '' };
+var tasks = [];
+// ── SHOW PAGE ──
+function show(id) {
+  document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('active'); });
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0, 0);
+}
+// ── DASHBOARD TAB SWITCHER ──
+function dashNav(tab) {
+  ['home','about','profile','settings'].forEach(function(t) {
+    document.getElementById('nav-' + t).classList.remove('alink');
+    document.getElementById(t + '-panel').classList.remove('show');
+  });
+  document.getElementById('nav-' + tab).classList.add('alink');
+  document.getElementById(tab + '-panel').classList.add('show');
+}
+// ── TOAST ──
+function showToast(msg) {
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(function() { t.classList.remove('show'); }, 3000);
+}
+// ── LOGIN ──
+function doLogin() {
+  var e = document.getElementById('li-email').value.trim();
+  var p = document.getElementById('li-pass').value;
+  if (!e || !p) return showToast('⚠️ Please fill in all fields.');
+  if (!/^[a-zA-Z0-9._%+\-]+@gmail\.com$/.test(e)) return showToast('⚠️ Please use a valid Gmail address.');
+  user = { name: e.split('@')[0], email: e };
+  enterDash();
+}
+// ── SIGNUP ──
+function doSignup() {
+  var n = document.getElementById('su-name').value.trim();
+  var e = document.getElementById('su-email').value.trim();
+  var p = document.getElementById('su-pass').value;
+  if (!n || !e || !p) return showToast('⚠️ Please fill in all fields.');
+  if (!/^[a-zA-Z0-9._%+\-]+@gmail\.com$/.test(e)) return showToast('⚠️ Please use a valid Gmail address.');
+  user = { name: n, email: e };
+  enterDash();
+}
+// ── ENTER DASHBOARD ──
+function enterDash() {
+  document.getElementById('greet').textContent     = 'Welcome back, ' + user.name + '! ✦';
+  document.getElementById('pf-name').textContent   = user.name;
+  document.getElementById('pf-email').textContent  = user.email;
+  document.getElementById('pd-name').textContent   = user.name;
+  document.getElementById('pd-email').textContent  = user.email;
+  document.getElementById('av-letter').textContent = user.name[0].toUpperCase();
+  show('dashboard');
+  dashNav('home');
+  renderTasks();
+  if ('Notification' in window && Notification.permission === 'default') Notification.requestPermission();
+}
+// ── ADD TASK ──
+function addTask() {
+  var title = document.getElementById('t-title').value.trim();
+  var date  = document.getElementById('t-date').value;
+  var time  = document.getElementById('t-time').value;
+  var cat   = document.getElementById('t-cat').value || 'General';
+  if (!title) return showToast('⚠️ Please enter a task title!');
+  tasks.push({ id: Date.now(), title: title, date: date, time: time, cat: cat, done: false });
+  document.getElementById('t-title').value = '';
+  document.getElementById('t-date').value  = '';
+  document.getElementById('t-time').value  = '';
+  document.getElementById('t-cat').value   = 'General';
+  renderTasks();
+  showToast('✅ Task added successfully!');
+  scheduleReminder(tasks[tasks.length - 1]);
+}
+// ── RENDER TASKS ──
+function renderTasks() {
+  var list = document.getElementById('task-list');
+  if (tasks.length === 0) {
+    list.innerHTML = '<div class="empty-msg"><div class="big">📭</div>No tasks yet — add your first task above!</div>';
+  } else {
+    list.innerHTML = tasks.map(function(t) {
+      return '<div class="task-item ' + (t.done ? 'done' : '') + '">' +
+        '<button class="task-check ' + (t.done ? 'checked' : '') + '" onclick="toggleTask(' + t.id + ')">' + (t.done ? '✓' : '') + '</button>' +
+        '<div class="task-info">' +
+          '<div class="task-title">' + t.title + '</div>' +
+          '<div class="task-meta">' +
+            (t.date ? '<span>📅 ' + fmtDate(t.date) + '</span>' : '') +
+            (t.time ? '<span>⏰ ' + fmtTime(t.time) + '</span>' : '') +
+            '<span>🗂️ ' + t.cat + '</span>' +
+          '</div>' +
+        '</div>' +
+        '<button class="del-btn" onclick="delTask(' + t.id + ')">🗑️</button>' +
+      '</div>';
+    }).join('');
+  }
+  updateStats();
+}
+// ── HELPERS ──
+function fmtDate(d) { var p = d.split('-'); return p[2]+'/'+p[1]+'/'+p[0]; }
+function fmtTime(t) { var p = t.split(':'); var h = parseInt(p[0]); return ((h%12)||12)+':'+p[1]+(h>=12?' PM':' AM'); }
+function toggleTask(id) { var t = tasks.find(function(x){return x.id===id;}); if(t){ t.done = !t.done; renderTasks(); } }
+function delTask(id) { tasks = tasks.filter(function(x){return x.id!==id;}); renderTasks(); showToast('🗑️ Task deleted!'); }
+// ── STATS ──
+function updateStats() {
+  var total = tasks.length;
+  var done  = tasks.filter(function(t){return t.done;}).length;
+  document.getElementById('stat-total').textContent   = total;
+  document.getElementById('stat-done').textContent    = done;
+  document.getElementById('stat-pending').textContent = total - done;
+  document.getElementById('ps-total').textContent     = total;
+  document.getElementById('ps-done').textContent      = done;
+}
+// ── CLOCK ──
+function updateClock() {
+  var now = new Date();
+  var days   = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  document.getElementById('clock').textContent   = String(now.getHours()).padStart(2,'0') + ':' + String(now.getMinutes()).padStart(2,'0');
+  document.getElementById('datestr').textContent = days[now.getDay()] + ', ' + now.getDate() + ' ' + months[now.getMonth()] + ' ' + now.getFullYear();
+}
+setInterval(updateClock, 1000);
+updateClock();
+// ── REMINDERS ──
+function scheduleReminder(task) {
+  if (!task.date || !task.time) 
+  return;
+  var due = new Date(task.date + 'T' + task.time).getTime();
+  if (due - 300000 - Date.now() > 0) 
+  setTimeout(function(){ fireReminder(task.title, false); }, due - 300000 - Date.now());
+  if (due - Date.now() > 0)          
+  setTimeout(function(){ fireReminder(task.title, true);  }, due - Date.now());
+}
+function fireReminder(title, isDue) {
+  var msg = isDue ? '⏰ "'+title+'" is due RIGHT NOW!' : '⏰ "'+title+'" is due in 5 minutes!';
+  document.getElementById('reminderText').textContent = msg;
+  document.getElementById('reminderAlert').classList.add('show');
+  setTimeout(function(){ document.getElementById('reminderAlert').classList.remove('show'); }, 10000);
+  playAlarmSound();
+  showToast(msg);
+  if (Notification.permission === 'granted') new Notification('TaskAura Reminder ⏰', { body: msg });
+}
+function closeReminder() { document.getElementById('reminderAlert').classList.remove('show'); }
+// ── SOUND ENGINE ──
+function tone(ctx, type, freq, start, dur, vol) {
+  var o = ctx.createOscillator(), g = ctx.createGain();
+  o.connect(g); g.connect(ctx.destination);
+  o.type = type;
+  o.frequency.setValueAtTime(freq, ctx.currentTime + start);
+  g.gain.setValueAtTime(vol, ctx.currentTime + start);
+  g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + start + dur);
+  o.start(ctx.currentTime + start); o.stop(ctx.currentTime + start + dur);
+}
+function playAlarmSound() {
+  try {
+    var ctx = new (window.AudioContext || window.webkitAudioContext)();
+    [[523,0,.25],[659,.28,.25],[784,.56,.4]].forEach(function(x){ tone(ctx,'sine',x[0],x[1],x[2],.4); });
+  } catch(e) {}
+}
+</script>
+</body>
+</html>
